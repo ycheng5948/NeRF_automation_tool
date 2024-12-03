@@ -34,46 +34,31 @@ class FileBrowserWindow(QWidget):
 
         self.file_name_line_edit = QLineEdit()
         self.browse_button = QPushButton("Browse")
-        self.button = QPushButton("Submit")
-        self.button.clicked.connect(self.submit)
+        self.browse_button.clicked.connect(self.browse_file)
+        self.submit_button = QPushButton("Submit")
+        self.submit_button.clicked.connect(self.submit)
         self.folder_path = None
 
         layout = QVBoxLayout()
         layout.addWidget(self.file_name_line_edit)
         layout.addWidget(self.browse_button)
-        layout.addWidget(self.button)
+        layout.addWidget(self.submit_button)
         self.setLayout(layout)
 
-        self.browse_button.clicked.connect(self.browse_file)
+    def browse_file(self):
+        self.folder_path = QFileDialog.getExistingDirectory(self, "Select Folder")
+        if self.folder_path:
+            self.file_name_line_edit.setText(self.folder_path)
 
-    # def browse_file(self):
-    #     self.folder_path = QFileDialog.getExistingDirectory(self, "Select Folder")
-    #     if self.folder_path:
-    #         self.file_name_line_edit.setText(self.folder_path)
-        
     def submit(self):
         if self.folder_path:
             print(self.folder_path)
         else:
-            print("No folder selected")
+            print("No folder selected")  
 
-    def browse_file(self):
-        file_dialog = QFileDialog()
-        file_dialog.setNameFilter("Images (*.png *.jpg *.jpeg);;Videos (*.mp4 *.avi *.mov)")
-
-        file_path, _ = file_dialog.getOpenFileName(self, "Select File or Folder")
-        if file_path:
-            self.line_edit.setText(file_path)
-
-    # def browse_file(self):
-    #     file_dialog = QFileDialog()
-    #     file_dialog.setFileMode(QFileDialog.AnyFile)
-
-    #     if file_dialog.exec_():
-    #         selected_files = file_dialog.selectedFiles()
-    #         if len(selected_files) > 0:
-    #             file_path = selected_files[0]
-    #             self.line_edit.setText(file_path)
+    # def open(self):
+    #     filename , filetype = QFileDialog.getOpenFileNames(directory='test', filter='TXT (*.txt)')
+    #     print(filename, filetype)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

@@ -20,22 +20,7 @@ from PyQt5.QtWidgets import *
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 SCRIPTS_FOLDER = os.path.join(ROOT_DIR, "scripts")
-
-# project_name = input("Enter project name: ")
-# PROJECT_FOLDER = os.path.join(ROOT_DIR, "data", "nerf", project_name)
-
-# # check if project folder exists
-# if not os.path.exists(PROJECT_FOLDER):
-#     print("Project folder does not exist. Exiting...")
-#     sys.exit(1)
-
-# images_name = []
-# images_folder = os.path.join(PROJECT_FOLDER, "images")
-# images = os.listdir(images_folder)
-# images_abs_path = [os.path.join(images_folder, i) for i in images]
-# # add images to images_name list
-# for i in images:
-#     images_name.append(i)
+DATA_FOLDER = os.path.join(ROOT_DIR, "data", "nerf")
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -63,6 +48,10 @@ class Ui_MainWindow(object):
         self.browse_button = QtWidgets.QPushButton(self.centralwidget)
         self.browse_button.setGeometry(QtCore.QRect(650, 70, 93, 28))
         self.browse_button.setObjectName("browse_button")
+
+        self.submit_button = QtWidgets.QPushButton(self.centralwidget)
+        self.submit_button.setGeometry(QtCore.QRect(650, 110, 93, 28))
+        self.submit_button.setObjectName("submit_button")
 
         # set up project name
         # self.project_name = None
@@ -106,6 +95,7 @@ class Ui_MainWindow(object):
         self.next.clicked.connect(self.show_next)
         # browse button
         self.browse_button.clicked.connect(self.browse_file)
+        self.submit_button.clicked.connect(self.submit)
         # set project name button
         self.set.clicked.connect(self.set_project)
 
@@ -116,6 +106,7 @@ class Ui_MainWindow(object):
         self.previous.setText(_translate("MainWindow", "Previous"))
         self.next.setText(_translate("MainWindow", "Next"))
         self.browse_button.setText(_translate("MainWindow", "Browse"))
+        self.submit_button.setText(_translate("MainWindow", "Submit"))
         self.file_name_line_edit.setText(_translate("MainWindow", ""))
         self.set.setText(_translate("MainWindow", "Set"))
 
@@ -130,9 +121,18 @@ class Ui_MainWindow(object):
 
 # browse file function
     def browse_file(self):
-        folder_path = QFileDialog.getExistingDirectory(self, "Select Folder")
-        if folder_path:
-            self.file_name_line_edit.setText(folder_path)
+        file_dialog = QFileDialog()
+        file_dialog.setNameFilter("Images (*.png *.jpg *.jpeg);;Videos (*.mp4 *.avi *.mov)")
+
+        file_path, _ = file_dialog.getOpenFileName(directory=DATA_FOLDER, filter="Folder")
+        if file_path:
+            self.file_name_line_edit.setText(file_path)
+    
+    def submit(self):
+        if self.file_name_line_edit:
+            print(self.file_name_line_edit.text())
+        else:
+            print("No folder selected")
 
 # set up project name function and get images paths
     def set_project(self):
@@ -147,7 +147,8 @@ class Ui_MainWindow(object):
             if not os.path.exists(self.PROJECT_FOLDER):
                 msg = QMessageBox()
                 msg.setWindowTitle("Warning")
-                msg.setText("Corresponding Project folder does not exist." + "\n" + "Please check project name")
+                msg.setText("Corresponding Project folder does not exist." + "\n"
+                            + "Please check project name")
                 msg.setIcon(QMessageBox.Warning)
                 msg.setDefaultButton(QMessageBox.Ok)
                 x = msg.exec_()
@@ -180,33 +181,6 @@ class Ui_MainWindow(object):
             msg.setIcon(QMessageBox.Warning)
             msg.setDefaultButton(QMessageBox.Ok)
             x = msg.exec_()
-
-    def show_popup(self):
-        msg = QMessageBox()
-        msg.setWindowTitle("Tips")
-        msg.setText("Please place the images based on the below structure")
-        msg.setIcon(QMessageBox.Information)
-        msg.setStandardButtons(QMessageBox.Ok|QMessageBox.Cancel|QMessageBox.Retry|QMessageBox.Ignore)
-        msg.setDefaultButton(QMessageBox.Ok)
-
-        msg.setInformativeText("Informative Text")
-        msg.setDetailedText("|-Root-Folder" + "\n" +
-                                "|  |-instant-ngp.exe" + "\n" +
-                                "|  |-Scripts" + "\n" +
-                                "|  |  |-nerf-automation.py" + "\n" +
-                                "|  |  |-colmap2nerf.py" + "\n" +
-                                "|  |  |-..." + "\n" +
-                                "|  |"  + "\n" +
-                                "|  |-data" + "\n" +
-                                "|    |-nerf" + "\n" +
-                                "|     |-transformed.json" + "\n" +
-                                "|     |-Images" + "\n" +
-                                "|       |-0001.jpg" + "\n" +
-                                "|       |-0002.jpg" + "\n" +
-                                "|       |-0003.jpg" + "\n" +
-                                "|       |-...")
-        msg.buttonClicked.connect(self.popup_button)
-        x = msg.exec_()
     
     def popup_button(self, i):
         print(i.text())
