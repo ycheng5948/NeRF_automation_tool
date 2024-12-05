@@ -45,8 +45,8 @@ Files should be placed under the correct structure as shown below:<br/>
 │              ├─ ...
 ```
 - Please make sure that the `nerf-automation.py` is placed in the `scripts folder` along with other instant-ngp scripts
-- If `images folder` isn't present but a video file was given, a transformed.json file will be generated while extracting images from the video.<br/>
-The first json file will be overwritten by a later one while colmap processes the images after filtering.
+- If `images folder` isn't present but a video file was given, a transformed.json file might be generated while extracting images from the video.<br/>
+The first json file will eventually be overwritten by a later one while colmap processes the images after filtering.
 ## Process
 **1. Set up Project Folder<br/>**<br/>
 	Type in the project name to find the desired project folder or hit the browse button to find and select the project folder<br/>
