@@ -352,7 +352,8 @@ class Ui_MainWindow(object):
                         # add images to images_name list
                         for i in self.images:
                             self.images_name.append(i)
-                        
+                        # reset the index in case another project was selected
+                        self.index = 0
                         self.Pic_label.setPixmap(QtGui.QPixmap(self.images_abs_path[self.index]))
                         Ui_MainWindow.update_image_label(self)
                         return self.images_abs_path
@@ -389,14 +390,16 @@ class Ui_MainWindow(object):
                     Ui_MainWindow.preview(self)
                     Ui_MainWindow.update_image_label(self)
         # in case if the user select the images folder
-        if project_name == "images":
+        elif project_name == "images":
             project_name = os.path.basename(os.path.dirname(select_folder))
             self.Project_name_lineEdit.setText(project_name)
             Ui_MainWindow.preview(self)
             Ui_MainWindow.update_image_label(self)
 
     def update_image_label(self):
-        self.Image_name_label.setText(self.images_name[self.index])
+        # if images_name is not yet appended
+        if self.images_name:
+            self.Image_name_label.setText(self.images_name[self.index])
         if self.blur_img and self.show_blur:
             self.Image_name_label.setText(self.blur_img[self.blur_idx].split('\\')[-1])
 
