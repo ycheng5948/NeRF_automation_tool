@@ -1,8 +1,8 @@
 # NeRF_automation_tool<br/>
-A personal project of creating a python tool to speed up the process of preparing input images for Instant-NeRF training.
+A personal project of creating a python tool to speed up the process of preparing input images for colmap camera detection and Instant-NeRF training.
 
 ## Synopsis
-By using the [Fast Fourier Transform](https://pyimagesearch.com/2020/06/15/opencv-fast-fourier-transform-fft-for-blur-detection-in-images-and-video-streams/) the motion blur in each image can be quantified .<br/>
+By using the [Fast Fourier Transform](https://pyimagesearch.com/2020/06/15/opencv-fast-fourier-transform-fft-for-blur-detection-in-images-and-video-streams/) the motion blur in each image can be quantified.<br/>
 After comparing the results of using <ins>**Variation of Laplacian**</ins> with that of <ins>**Fast Fourier Transform**</ins>, the latter produces a more accurate blurriness for images extract from videos.<br/>
 Since the images can be taken on various devices/by different persons(professional or not); it's impossible to set a fixed threshold to determine if a given image is blurry or not. Thus, the threshold is determined by the given set of images' blurriness mean and standard deviation(σ).
 ```
@@ -45,15 +45,14 @@ Files should be placed under the correct structure as shown below:<br/>
 │              ├─ ...
 ```
 - Please make sure that the `nerf-automation.py` is placed in the `scripts folder` along with other instant-ngp scripts
-- If `images folder` isn't present but a video file was given, a transformed.json file might be generated while extracting images from the video.<br/>
-The first json file will eventually be overwritten by a later one while colmap processes the images after filtering.
+- If `images folder` isn't present but a video file was given, a transformed.json file might be generated while extracting images from the video. The process of writing the first transformed.json file usually endsup failing due to permissions errors. However, the first json file will eventually be overwritten and replaced by the later one while colmap processes the sharper/filtered images.
 ## Process
 **1. Set up Project Folder<br/>**<br/>
-	Type in the project name to find the desired project folder or hit the browse button to find and select the project folder<br/>
+	Type in the project name to find the desired project folder or hit `browse` button and select project folder<br/>
 	The first image should automatically show in the preview window<br/>
 
   > Please make sure that the images have been extracted from the video and placed in `images` folder<br/>
-  > If a video file was found in the project folder, a pop-up window with the colmap2nerf code would be provided in detail<br/>
+  > If only a video file was found in the project folder, a pop-up window with the colmap2nerf code would be provided in `Show Details`<br/>
   > If more than one video is present, only the first video's path would be taken and run if `Run for me` button was clicked<br/>
 <br/>
 
@@ -71,12 +70,12 @@ The first json file will eventually be overwritten by a later one while colmap p
 
 **3. Check or uncheck options<br/>**<br/>
   Make sure desired options are checked before hitting `Run` button<br/>
-  - Auto-filter blurry images: Default checked, will automatically delete blurry images after hitting `Run` button
-  - Manually check blurry images: Won't delete blurry images, instead keeping all for later process
-  - Outdoor scene: Check if the project images/video were taken outdoors, will set the [aabb_scale](https://github.com/NVlabs/instant-ngp/blob/master/docs/nerf_dataset_tips.md#existing-datasets) as 16, while the default value is 8
-  - Run Instant-NeRF: Open and start Instant-NeRF training with the transformed.json file from colmap and the images
+  - <ins>Auto-filter blurry images</ins>: Default checked, will automatically delete blurry images after hitting `Run` button
+  - <ins>Manually check blurry images</ins>: Won't delete blurry images, instead keeping all for later process allowing the user to filter manually
+  - <ins>Outdoor scene</ins>: Check if the project images/video were taken outdoors, will set the [aabb_scale](https://github.com/NVlabs/instant-ngp/blob/master/docs/nerf_dataset_tips.md#existing-datasets) as 16, while the default value is 8
+  - <ins>Run Instant-NeRF</ins>: Open and start Instant-NeRF training with the transformed.json file from colmap and the images
 
-  > Since the threshold is determined by the mean and std of images' blurriness.<br/>
+  > Since the threshold is determined by the mean and std of images' blurriness<br/>
   > If most images are blurry, it is recommended to re-run and re-filter several times until all images are considered sharp 
 <br/>
 
