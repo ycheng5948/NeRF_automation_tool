@@ -1,6 +1,8 @@
 # NeRF_automation_tool<br/>
 A personal project of creating a python tool to speed up the process of preparing input images for colmap camera detection and Instant-NeRF training.
 
+![GUI](https://github.com/user-attachments/assets/0dd569ba-02c0-40f0-a55c-1f7fe29dad44)
+
 ## Synopsis
 By using the [Fast Fourier Transform](https://pyimagesearch.com/2020/06/15/opencv-fast-fourier-transform-fft-for-blur-detection-in-images-and-video-streams/) the motion blur in each image can be quantified.<br/>
 After comparing the results of using <ins>**Variation of Laplacian**</ins> with that of <ins>**Fast Fourier Transform**</ins>, the latter produces a more accurate blurriness for images extract from videos.<br/>
