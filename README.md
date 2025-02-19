@@ -1,11 +1,11 @@
 # NeRF_automation_tool<br/>
-A personal project of creating a python tool to speed up the process of preparing input images for colmap camera detection and Instant-NeRF training.
+A personal project of creating a Python tool to speed up the process of preparing input images for colmap camera detection and Instant-NeRF training.
 
 ![GUI](https://github.com/user-attachments/assets/0dd569ba-02c0-40f0-a55c-1f7fe29dad44)
 
 ## Synopsis
 By using the [Fast Fourier Transform](https://pyimagesearch.com/2020/06/15/opencv-fast-fourier-transform-fft-for-blur-detection-in-images-and-video-streams/) the motion blur in each image can be quantified.<br/>
-After comparing the results of using <ins>**Variation of Laplacian**</ins> with that of <ins>**Fast Fourier Transform**</ins>, the latter produces a more accurate blurriness for images extract from videos.<br/>
+After comparing the results of using <ins>**Variation of Laplacian**</ins> with that of <ins>**Fast Fourier Transform**</ins>, the latter produces a more accurate blurriness for images extracted from videos.<br/>
 Since the images can be taken on various devices/by different persons(professional or not); it's impossible to set a fixed threshold to determine if a given image is blurry or not. Thus, the threshold is determined by the given set of images' blurriness mean and standard deviation(σ).
 ```
 Threshold = Mean - Standard deviation
@@ -47,14 +47,14 @@ Files should be placed under the correct structure as shown below:<br/>
 │              ├─ ...
 ```
 - Please make sure that the `nerf-automation.py` is placed in the `scripts folder` along with other instant-ngp scripts
-- If `images folder` isn't present but a video file was given, a transformed.json file might be generated while extracting images from the video. The process of writing the first transformed.json file usually endsup failing due to permissions errors. However, the first json file will eventually be overwritten and replaced by the later one while colmap processes the sharper/filtered images.
+- If `images folder` isn't present but a video file was given, a transformed.json file might be generated while extracting images from the video. The process of writing the first transformed.json file usually ends up failing due to permissions errors. However, the first json file will eventually be overwritten and replaced by the later one while colmap processes the sharper/filtered images.
 ## Process
 **1. Set up Project Folder<br/>**<br/>
-	Type in the project name to find the desired project folder or hit `browse` button and select project folder<br/>
+	Type in the project name to find the desired project folder or hit `browse` button and select the project folder<br/>
 	The first image should automatically show in the preview window<br/>
 
   > Please make sure that the images have been extracted from the video and placed in `images` folder<br/>
-  > If only a video file was found in the project folder, a pop-up window with the colmap2nerf code would be provided in `Show Details`<br/>
+  > If only a video file were found in the project folder, a pop-up window with the colmap2nerf code would be provided in `Show Details`<br/>
   > If more than one video is present, only the first video's path would be taken and run if `Run for me` button was clicked<br/>
 <br/>
 
